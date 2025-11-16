@@ -1,7 +1,5 @@
-/* ============================================================
-   Kruskal's MST Algorithm (from scratch, no libraries)
-   ============================================================
-
+/*  Kruskal's MST Algorithm 
+   
    PSEUDOCODE:
    1. Sort all edges by weight.
    2. Initialize Disjoint Set Union (Union-Find).
@@ -49,7 +47,7 @@ export function kruskalMST(n, edges) {
 
     const startTime = performance.now();
 
-    // Sort edges: weight ascending
+    // Sort edges: weight asc
     const sorted = [...edges].sort((a, b) => a[2] - b[2]);
 
     const dsu = new DSU(n);

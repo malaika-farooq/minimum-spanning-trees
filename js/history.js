@@ -1,9 +1,3 @@
-// history.js
-/*
-    Simple in-memory history logging for MST runs.
-    Not required by final project, but helps TA see structure & modularity.
-*/
-
 let mstHistory = [];
 
 /**
@@ -25,12 +19,12 @@ export function addHistory(algo, n, m, weight, timeMs) {
     });
 }
 
-/** Returns history list */
+// Returns history list 
 export function getHistory() {
     return mstHistory;
 }
 
-/** Clears history */
+//Clears history 
 export function clearHistory() {
     mstHistory = [];
 }

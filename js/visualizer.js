@@ -1,5 +1,5 @@
 // visualizer.js
-// MST Visualizer (Prim + Kruskal) – with fixed MANUAL input logic
+// MST Visualizer (Prim + Kruskal)(with  rand and manual input logic)
 
 import {
     resetManualEdges,
@@ -21,9 +21,6 @@ import { showModal } from "./utils.js";
 
 window.addEventListener("DOMContentLoaded", () => {
 
-    /*******************************************
-     * INPUT ELEMENTS
-     *******************************************/
     const nodesInput = document.getElementById("visNodes");
     const edgesInput = document.getElementById("visEdges");
     const minWInput = document.getElementById("visMinWeight");
@@ -36,26 +33,21 @@ window.addEventListener("DOMContentLoaded", () => {
     const mW = document.getElementById("mW");
     const addManualEdgeBtn = document.getElementById("addManualEdgeBtn");
 
-    /*******************************************
-     * BUTTONS
-     *******************************************/
+    // BUTTONS
     const buildBtn = document.getElementById("generateGraphBtn");
     const clearBtn = document.getElementById("clearGraphBtn");
     const runMSTBtn = document.getElementById("runMSTBtn");
     const compareBtn = document.getElementById("compareBtn");
 
-    /*******************************************
-     * CANVASES
-     *******************************************/
+    //CANVASES
     const primCanvas = document.getElementById("primCanvas");
     const primCtx = primCanvas.getContext("2d");
 
     const kruskalCanvas = document.getElementById("kruskalCanvas");
     const kruskalCtx = kruskalCanvas.getContext("2d");
 
-    /*******************************************
-     * CHART + HISTORY + STATS
-     *******************************************/
+
+    // CHART + HISTORY + STATS
     const historyBody = document.getElementById("visHistoryBody");
     const statsPrimAvg = document.getElementById("statsPrimAvg");
     const statsPrimBest = document.getElementById("statsPrimBest");
@@ -107,9 +99,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /*******************************************
-     * INTERNAL STATE
-     *******************************************/
+    // INTERNAL STATE
     let state = {
         n: 0,
         m: 0,
@@ -124,9 +114,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     let history = [];
 
-    /*******************************************
-     * CANVAS RESIZE HANDLING
-     *******************************************/
+    //CANVAS RESIZE HANDLING
     function resizeCanvases() {
         [primCanvas, kruskalCanvas].forEach(canvas => {
             const rect = canvas.parentElement.getBoundingClientRect();
@@ -139,9 +127,7 @@ window.addEventListener("DOMContentLoaded", () => {
     resizeCanvases();
     window.addEventListener("resize", resizeCanvases);
 
-    /*******************************************
-     * HELPER: REDRAW BASE GRAPH (NO MST)
-     *******************************************/
+    // REDRAW BASE GRAPH (NO MST)
     function redrawBaseGraph() {
         if (!state.positions.length) return;
 
@@ -157,16 +143,14 @@ window.addEventListener("DOMContentLoaded", () => {
         drawNodes(kruskalCtx, state.positions);
     }
 
-    /*******************************************
-     * MODE HANDLING
-     *******************************************/
+    // MODE HANDLING
     modeInput.addEventListener("change", () => {
         state.mode = modeInput.value;
 
         if (state.mode === "manual") {
             manualContainer.classList.remove("hidden");
             resetManualEdges();
-            // For manual mode we build edges incrementally,
+            // For manual mode we can build edges incrementally,
             // so state.edges will be filled as user adds edges.
             state.edges = [];
             redrawBaseGraph();
@@ -178,9 +162,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /*******************************************
-     * FIXED MANUAL EDGE HANDLER
-     *******************************************/
+    // MANUAL EDGE HANDLER
     addManualEdgeBtn.addEventListener("click", () => {
         const u = parseInt(mU.value, 10);
         const v = parseInt(mV.value, 10);
@@ -231,9 +213,7 @@ window.addEventListener("DOMContentLoaded", () => {
         mW.value = "";
     });
 
-    /*******************************************
-     * BUILD GRAPH (RANDOM or MANUAL)
-     *******************************************/
+    //BUILD GRAPH (RANDOM or MANUAL)
     buildBtn.addEventListener("click", () => {
         const n = parseInt(nodesInput.value, 10);
         let m = parseInt(edgesInput.value, 10);
@@ -279,9 +259,7 @@ window.addEventListener("DOMContentLoaded", () => {
         showModal("Graph Ready", "Graph generated successfully.");
     });
 
-    /*******************************************
-     * CLEAR GRAPH
-     *******************************************/
+    //CLEAR GRAPH
     clearBtn.addEventListener("click", () => {
         state = {
             n: 0,
@@ -308,9 +286,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
-    /*******************************************
-     * RUN MST (PRIM + KRUSKAL TOGETHER)
-     *******************************************/
+    //RUN MST (PRIM + KRUSKAL TOGETHER)
     runMSTBtn.addEventListener("click", () => {
         if (!ensureGraph()) return;
 
@@ -343,9 +319,7 @@ window.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    /*******************************************
-     * COMPARE BUTTON (uses LAST run)
-     *******************************************/
+    // COMPARE BUTTON (uses LAST run)
     compareBtn.addEventListener("click", () => {
         if (!state.primRes || !state.kruskalRes) {
             return showModal("No MST Yet", "Run MST first, then compare.");
@@ -373,9 +347,7 @@ window.addEventListener("DOMContentLoaded", () => {
         updateStats();
     });
 
-    /*******************************************
-     * HISTORY TABLE
-     *******************************************/
+    //HISTORY TABLE
     function renderHistory() {
         historyBody.innerHTML = "";
         history.forEach((h, i) => {
@@ -395,9 +367,7 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /*******************************************
-     * STATISTICS PANEL
-     *******************************************/
+    //STATISTICS 
     function updateStats() {
         const prim = history.map(h => h.primTime);
         const kruskal = history.map(h => h.kruskalTime);

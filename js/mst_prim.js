@@ -1,22 +1,19 @@
-/* ============================================================
-   Prim's MST Algorithm (from scratch, no libraries)
-   ============================================================
+/*   Prim's MST Algorithm 
 
    PSEUDOCODE:
    1. Pick any start node (0 by default unless user chooses).
    2. Mark it as visited.
    3. Push all its edges into a min-heap (priority queue).
    4. While heap not empty:
-        - Extract edge with minimum weight.
-        - If the new node is not visited:
-              - Add edge to MST
-              - Mark node visited
-              - Push all adjacent edges of this node
+    - Extract edge with minimum weight.
+     - If the new node is not visited:
+        - Add edge to MST
+        - Mark node visited
+        - Push all adjacent edges of this node
    5. End when MST has (n-1) edges or heap is empty.
 
    Time Complexity:
-       O((n + m) log n)
-============================================================ */
+       O((n + m) log n)*/
 
 export function primMST(n, edges, startNode = 0) {
 
@@ -29,7 +26,7 @@ export function primMST(n, edges, startNode = 0) {
     }
 
     const visited = new Array(n).fill(false);
-    const pq = []; // min-heap implemented manually
+    const pq = []; // min-heap implemented manual
     const mst = [];
 
     const startTime = performance.now();
@@ -58,7 +55,7 @@ export function primMST(n, edges, startNode = 0) {
             }
         }
 
-        // Re-sort heap (simple but fast in JS for moderate sizes)
+        // re-sort heap 
         pq.sort((a, b) => a[0] - b[0]);
     }
 

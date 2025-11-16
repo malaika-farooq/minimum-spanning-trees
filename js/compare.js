@@ -1,6 +1,3 @@
-// compare.js – FINAL Fixed Version
-// Proper line chart with smooth curves and correct experiment plotting
-
 import { generateRandomGraph } from "./utils.js";
 import { primMST } from "./mst_prim.js";
 import { kruskalMST } from "./mst_kruskal.js";
@@ -20,7 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let primTimes = [];
     let kruskalTimes = [];
 
-    // FIXED LINE CHART
+    // line chart
     const chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -81,7 +78,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Run Experiment Button
+    // run the experiment bugtton
     runBtn.addEventListener("click", () => {
 
         const n = parseInt(nInput.value, 10);
@@ -96,14 +93,14 @@ window.addEventListener("DOMContentLoaded", () => {
             return showModal("Invalid Input", "Edges must be at least n - 1.");
         }
 
-        // Generate random graph
+        //generating random graph
         const graph = generateRandomGraph(n, m, 1, 20);
 
-        // Always run BOTH algorithms for comparison
+        // always run BOTH algorithms for comparison
         const prim = primMST(n, graph.edges);
         const kruskal = kruskalMST(n, graph.edges);
 
-        // Push results
+        // push results
         labels.push(labels.length + 1);
         primTimes.push(Number(prim.timeMs.toFixed(3)));
         kruskalTimes.push(Number(kruskal.timeMs.toFixed(3)));
