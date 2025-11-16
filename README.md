@@ -1,4 +1,4 @@
-# Minimum Spanning Trees – Prim & Kruskal (Visualizer + Performance Analyzer)
+# Minimum Spanning Trees | Prim & Kruskal (Visualizer + Performance Analyzer)
 Final Project – Design & Analysis of Algorithms
 
 This project implements and visualizes **Minimum Spanning Tree (MST)** algorithms:
