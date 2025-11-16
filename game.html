@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MST Game – Islands & Cities</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+        }
+        .map-bg {
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            border: 3px solid rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="w-full bg-white/80 backdrop-blur shadow-md px-10 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-semibold text-indigo-700">MST is So Cool — Game Mode</h1>
+        <a href="index.html"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition shadow">
+            Home
+        </a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="px-10 py-10 max-w-6xl mx-auto">
+
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+            Connect the start and destination using MST — Choose Prim or Kruskal & Win!
+        </h2>
+
+        <!-- SETTINGS BOX -->
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-indigo-200 space-y-6">
+
+            <!-- Mode Toggle -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Mode -->
+                <div>
+                    <label class="font-medium text-gray-700">Game Theme</label>
+                    <select id="gameMode" 
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-400">
+                        <option value="island">🏝️ Islands</option>
+                        <option value="city">🏙️ Cities</option>
+                    </select>
+                </div>
+
+                <!-- Nodes -->
+                <div>
+                    <label class="font-medium text-gray-700">Number of Nodes</label>
+                    <input id="gameNodes" type="number" min="3" max="20"
+                        placeholder="e.g., 10"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-400" />
+                </div>
+
+                <!-- Algorithm -->
+                <div>
+                    <label class="font-medium text-gray-700">Algorithm</label>
+                    <select id="gameAlgo"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-400">
+                        <option value="prim">Prim</option>
+                        <option value="kruskal">Kruskal</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- Start & Destination -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div>
+                    <label class="font-medium text-gray-700">Start Node</label>
+                    <input id="gameStart" type="number"
+                        placeholder="Enter start node"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-400" />
+                </div>
+
+                <div>
+                    <label class="font-medium text-gray-700">Destination Node</label>
+                    <input id="gameEnd" type="number"
+                        placeholder="Enter destination node"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-400" />
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-6 mt-6">
+                <button id="startGameBtn"
+                    class="px-7 py-3 bg-green-600 text-white rounded-xl shadow hover:bg-green-700 transition">
+                    Start Game
+                </button>
+
+                <button id="resetGameBtn"
+                    class="px-7 py-3 bg-red-500 text-white rounded-xl shadow hover:bg-red-600 transition">
+                    Reset Game
+                </button>
+            </div>
+
+        </div>
+
+        <!-- GAME MAP -->
+        <div class="mt-10 bg-white p-6 rounded-2xl shadow-xl border border-indigo-200">
+
+            <h3 class="text-xl font-semibold text-indigo-700 mb-4">Game Map</h3>
+
+            <!-- Map image background -->
+            <div id="mapContainer"
+                class="map-bg w-full h-[520px] flex items-center justify-center bg-gray-200 rounded-2xl overflow-hidden">
+
+                <canvas id="gameCanvas" class="w-full h-full"></canvas>
+
+            </div>
+
+            <p id="gameStatus" class="mt-5 text-lg font-medium text-center text-gray-700"></p>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="js/utils.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/drawing.js"></script>
+    <script src="js/mst_prim.js"></script>
+    <script src="js/mst_kruskal.js"></script>
+    <script src="js/game.js"></script>
+
+</body>
+</html>

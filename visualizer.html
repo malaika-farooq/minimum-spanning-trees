@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MST Visualizer – Prim & Kruskal</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="w-full bg-white shadow px-10 py-4 flex justify-between items-center">
+        <h1 class="text-3xl font-semibold text-indigo-700">MST Visualizer</h1>
+
+        <a href="index.html" 
+           class="px-4 py-2 rounded-xl bg-indigo-600 text-white shadow hover:bg-indigo-700 transition">
+            Home
+        </a>
+    </nav>
+
+    <main class="px-10 py-10 max-w-7xl mx-auto">
+
+        <!-- Description -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+            Build Graph → Run MST (Prim + Kruskal) → Compare Algorithms
+        </h2>
+
+        <!-- SETTINGS PANEL -->
+        <section class="bg-white p-8 rounded-2xl shadow-xl border border-indigo-200 mb-10">
+
+            <h3 class="text-xl font-semibold text-indigo-700 mb-4">Graph Input Settings</h3>
+
+            <!-- Inputs -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+                <!-- Nodes -->
+                <div>
+                    <label class="font-medium text-gray-700">Nodes (n)</label>
+                    <input id="visNodes" 
+                           type="number"
+                           class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-500"
+                           placeholder="e.g., 8" min="2">
+                </div>
+
+                <!-- Edges -->
+                <div>
+                    <label class="font-medium text-gray-700">Edges (m)</label>
+                    <input id="visEdges" 
+                        type="number"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-500"
+                        placeholder="e.g., 12" min="1">
+                </div>
+
+                <!-- Min Weight -->
+                <div>
+                    <label class="font-medium text-gray-700">Min Weight</label>
+                    <input id="visMinWeight" 
+                           type="number"
+                           class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-500"
+                           placeholder="1" min="1">
+                </div>
+
+                <!-- Max Weight -->
+                <div>
+                    <label class="font-medium text-gray-700">Max Weight</label>
+                    <input id="visMaxWeight" 
+                           type="number"
+                           class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-500"
+                           placeholder="20" min="1">
+                </div>
+
+                <!-- Input Mode -->
+                <div>
+                    <label class="font-medium text-gray-700">Input Mode</label>
+                    <select id="visInputMode"
+                        class="w-full mt-1 p-3 rounded-xl border border-gray-300 focus:ring-indigo-500">
+                        <option value="random">Random Graph</option>
+                        <option value="manual">Manual Input</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Manual Input Block -->
+            <div id="manualInputContainer" class="hidden mt-8 bg-gray-50 p-6 rounded-xl border border-gray-300">
+
+                <h3 class="text-lg font-medium text-gray-700 mb-3">Manual Edge Entry</h3>
+
+                <p class="text-sm text-gray-500 mb-3">
+                    Use node numbers from 0 to n−1. Add as many edges as needed.
+                </p>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <input id="mU" placeholder="u" type="number" class="p-3 rounded-xl border border-gray-300">
+                    <input id="mV" placeholder="v" type="number" class="p-3 rounded-xl border border-gray-300">
+                    <input id="mW" placeholder="weight" type="number" class="p-3 rounded-xl border border-gray-300">
+                </div>
+
+                <button id="addManualEdgeBtn"
+                        class="mt-4 px-5 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700">
+                    Add Edge
+                </button>
+
+                <p class="text-gray-600 mt-3 text-sm">
+                    Manual edges override random graph generation.
+                </p>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="mt-8 flex flex-wrap gap-4">
+
+                <button id="generateGraphBtn"
+                    class="px-6 py-3 bg-green-600 text-white font-medium rounded-xl shadow hover:bg-green-700">
+                    Build Graph
+                </button>
+
+                <button id="clearGraphBtn"
+                    class="px-6 py-3 bg-red-500 text-white font-medium rounded-xl shadow hover:bg-red-600">
+                    Clear Graph
+                </button>
+
+                <button id="runMSTBtn"
+                    class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl shadow hover:bg-indigo-700">
+                    Run MST (Prim + Kruskal)
+                </button>
+
+                <button id="compareBtn"
+                    class="px-6 py-3 bg-amber-500 text-white font-medium rounded-xl shadow hover:bg-amber-600">
+                    Compare Algorithms
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- TWO MST OUTPUT PANELS -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Prim -->
+            <section class="bg-white p-6 rounded-2xl shadow-xl border border-indigo-200">
+                <h3 class="text-xl font-semibold text-indigo-600 mb-4">Prim's MST</h3>
+                <canvas id="primCanvas" class="w-full h-[480px] bg-white border border-gray-300 rounded-xl"></canvas>
+            </section>
+
+            <!-- Kruskal -->
+            <section class="bg-white p-6 rounded-2xl shadow-xl border border-pink-200">
+                <h3 class="text-xl font-semibold text-pink-600 mb-4">Kruskal's MST</h3>
+                <canvas id="kruskalCanvas" class="w-full h-[480px] bg-white border border-gray-300 rounded-xl"></canvas>
+            </section>
+        </div>
+
+        <!-- COMPARISON SECTION -->
+        <div class="mt-12 space-y-10">
+
+            <!-- Comparison Chart -->
+            <section class="bg-white p-6 rounded-2xl shadow-xl border border-indigo-200">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-4">Time Comparison Chart</h3>
+                <canvas id="visCompareChart" class="w-full h-[360px] bg-white border border-gray-200 rounded-xl"></canvas>
+            </section>
+
+            <!-- History Table -->
+            <section class="bg-white p-6 rounded-2xl shadow-xl border border-indigo-200">
+                <h3 class="text-xl font-semibold text-indigo-700 mb-4">Run History</h3>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="py-2 pr-4">#</th>
+                                <th class="py-2 pr-4">n</th>
+                                <th class="py-2 pr-4">m</th>
+                                <th class="py-2 pr-4">Weights</th>
+                                <th class="py-2 pr-4">Prim (ms)</th>
+                                <th class="py-2 pr-4">Kruskal (ms)</th>
+                                <th class="py-2 pr-4">Prim W</th>
+                                <th class="py-2 pr-4">Kruskal W</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="visHistoryBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Statistics -->
+            <section class="bg-white p-6 rounded-2xl shadow-xl border border-indigo-200">
+
+                <h3 class="text-xl font-semibold text-indigo-700 mb-6">Statistics</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    <div>
+                        <h4 class="font-semibold text-indigo-600 mb-2">Prim</h4>
+                        <p class="text-sm text-gray-700">
+                            Average Time: <span id="statsPrimAvg">–</span> ms<br>
+                            Best Time: <span id="statsPrimBest">–</span> ms
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-pink-600 mb-2">Kruskal</h4>
+                        <p class="text-sm text-gray-700">
+                            Average Time: <span id="statsKruskalAvg">–</span> ms<br>
+                            Best Time: <span id="statsKruskalBest">–</span> ms
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- JS Controller -->
+    <script type="module" src="js/visualizer.js"></script>
+
+</body>
+</html>

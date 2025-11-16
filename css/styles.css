@@ -1,0 +1,194 @@
+/* ===========================================================
+   GLOBAL LIGHT THEME FIXES
+   =========================================================== */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+}
+
+canvas {
+    border-radius: 12px;
+    background: #ffffff !important;
+}
+
+/* ===========================================================
+   MST GRAPH TOUCHES
+   =========================================================== */
+
+/* Edge weight labels drawn in SVG */
+.edge-weight-label {
+    fill: #1e293b; /* slate-800 */
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+/* Node highlight glow when selected */
+.node-highlight {
+    stroke: #f472b6; /* pink-400 */
+    stroke-width: 4px;
+}
+
+/* MST edges (Prim/Kruskal) */
+.mst-edge {
+    stroke: #10b981; /* green-500 */
+    stroke-width: 3px;
+}
+
+/* Non-MST edges */
+.graph-edge {
+    stroke: #94a3b8; /* slate-400 */
+    stroke-width: 2px;
+    opacity: 0.8;
+}
+
+/* On hover edges glow slightly */
+.graph-edge:hover,
+.mst-edge:hover {
+    filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.5));
+}
+
+/* Node circles */
+.graph-node {
+    fill: #0ea5e9; /* sky-500 */
+    stroke: #0369a1; /* sky-700 */
+    stroke-width: 2;
+    cursor: pointer;
+}
+
+/* ===========================================================
+   ANIMATIONS FOR MST DRAWING (Soft Fade-In)
+   =========================================================== */
+
+@keyframes fadeEdge {
+    0% { stroke-opacity: 0; }
+    100% { stroke-opacity: 1; }
+}
+
+.edge-animated {
+    animation: fadeEdge 0.4s ease-in;
+}
+
+/* ===========================================================
+   MODAL STYLES (utils.js)
+   =========================================================== */
+
+.modal-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.modal-box {
+    background: #ffffff;
+    padding: 26px;
+    width: 320px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 40px rgba(0,0,0,0.1);
+    border: 2px solid #c7d2fe; /* indigo-200 */
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #4f46e5; /* indigo-600 */
+    margin-bottom: 8px;
+}
+
+.modal-message {
+    color: #374151; /* gray-700 */
+    margin-bottom: 16px;
+}
+
+.modal-close-btn {
+    background: #4f46e5; /* indigo-600 */
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.25s;
+}
+
+.modal-close-btn:hover {
+    background: #4338ca; /* indigo-700 */
+}
+
+/* ===========================================================
+   GAME MODE GRAPHICAL FIXES
+   =========================================================== */
+
+/* Start and Destination markers */
+.game-node-start {
+    fill: #22c55e !important; /* green-500 */
+    stroke: #15803d !important; /* green-700 */
+    stroke-width: 3;
+}
+
+.game-node-end {
+    fill: #ef4444 !important; /* red-500 */
+    stroke: #b91c1c !important; /* red-700 */
+    stroke-width: 3;
+}
+
+/* Correct path edges */
+.game-correct-path {
+    stroke: #10b981; /* green-500 */
+    stroke-width: 4;
+}
+
+/* Incorrect selection flash */
+@keyframes wrongFlash {
+    0% { fill: #ef4444; }
+    50% { fill: #fca5a5; }
+    100% { fill: #ef4444; }
+}
+
+.game-wrong-node {
+    animation: wrongFlash 0.6s ease-in-out;
+}
+
+/* ===========================================================
+   CARD & BUTTON ENHANCEMENTS
+   =========================================================== */
+
+.card-glow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(99, 102, 241, 0.25);
+    transition: 0.3s;
+}
+
+.button-soft {
+    transition: 0.3s;
+}
+
+.button-soft:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+/* ===========================================================
+   LAYOUT FIXES FOR CANVAS SIZE
+   =========================================================== */
+
+.big-canvas {
+    width: 100%;
+    height: 520px !important;
+}
+
+.huge-canvas {
+    width: 100%;
+    height: 600px !important;
+}
+
