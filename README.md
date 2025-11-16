@@ -37,7 +37,7 @@ It includes an interactive MST visualizer and a performance comparison page usin
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### **1. Open Directly (Simple)**  
 Double-click:
@@ -84,7 +84,7 @@ npx http-server .
 
 ---
 
-## 🎮 MST Visualizer (`visualizer.html`)
+##  MST Visualizer (`visualizer.html`)
 
 Features:
 
@@ -108,7 +108,7 @@ Features:
 
 ---
 
-## 📊 Performance Analyzer (`compare.html`)
+##  Performance Analyzer (`compare.html`)
 
 Allows you to measure runtime performance.
 
@@ -130,7 +130,7 @@ Each run:
 
 ---
 
-## 🧠 Algorithms
+##  Algorithms
 
 ### **Prim’s MST — `mst_prim.js`**
 - Adjacency list  
@@ -152,7 +152,7 @@ Each run:
 
 ---
 
-## 🎨 Canvas Renderer (`drawing.js`)
+##  Canvas Renderer (`drawing.js`)
 Handles:
 
 - Drawing nodes  
@@ -163,7 +163,7 @@ Handles:
 
 ---
 
-## 🧱 Graph Generator (`graph.js`)
+##  Graph Generator (`graph.js`)
 Includes:
 
 - Random connected graph generation  
@@ -173,7 +173,7 @@ Includes:
 
 ---
 
-## 🧩 Utilities (`utils.js`)
+##  Utilities (`utils.js`)
 Contains:
 
 - Modal creation  
@@ -182,7 +182,7 @@ Contains:
 
 ---
 
-## 🔍 MST History (`history.js`)
+##  MST History (`history.js`)
 Stores:
 
 - Algorithm  
